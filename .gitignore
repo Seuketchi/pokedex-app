@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Injectable generated files
+lib/core/di/injection_container.config.dart
