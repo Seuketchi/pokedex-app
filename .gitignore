@@ -46,3 +46,4 @@ app.*.map.json
 
 # Injectable generated files
 lib/core/di/injection_container.config.dart
+**/*.freezed.dart
