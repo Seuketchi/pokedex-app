@@ -34,10 +34,12 @@ abstract class HiveInit {
 abstract class HiveModule {
   // Store JSON Strings of cached Pokemon list responses
   @lazySingleton
+  @Named('pokemonList')
   Box<String> get pokemonListBox => Hive.box<String>(HiveBoxes.pokemonList);
 
   // Stores JSON Strings of cached Pokemon detail responses
   @lazySingleton
+  @Named('pokemonDetail')
   Box<String> get pokemonDetailBox => Hive.box<String>(HiveBoxes.pokemonDetail);
 
   // Stores user preferences
