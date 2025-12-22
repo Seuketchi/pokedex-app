@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex_app/core/di/injection_container.dart';
 
 void main() {
-  configureDependencies();  // ← Initialize DI before running app
+  configureDependencies(); // ← Initialize DI before running app
   runApp(const MyApp());
 }
 

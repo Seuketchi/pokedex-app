@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 
 // return expected error states that the UI can handle gracefully
 abstract class Failure extends Equatable {
-
   const Failure({this.message});
   final String? message;
 
