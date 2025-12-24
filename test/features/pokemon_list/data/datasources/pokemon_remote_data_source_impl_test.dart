@@ -1,436 +1,122 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:pokedex_app/core/error/exceptions.dart';
-import 'package:pokedex_app/core/network/network_info.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:pokedex_app/features/pokemon_list/data/datasources/pokemon_api_service.dart';
-import 'package:pokedex_app/features/pokemon_list/data/datasources/pokemon_remote_data_source_impl.dart';
 import 'package:pokedex_app/features/pokemon_list/data/models/pokemon_list_response.dart';
-import 'package:pokedex_app/features/pokemon_list/data/models/pokemon_model.dart';
-
-class MockPokemonApiService extends Mock implements PokemonApiService {}
-
-class MockNetworkInfo extends Mock implements NetworkInfo {}
+import 'package:pokedex_app/features/pokemon_list/data/models/pokemon_type_response.dart';
 
 void main() {
-  late PokemonRemoteDataSourceImpl dataSource;
-  late MockPokemonApiService mockApiService;
-  late MockNetworkInfo mockNetworkInfo;
+  late Dio dio;
+  late DioAdapter dioAdapter;
+  late PokemonApiService apiService;
 
   setUp(() {
-    mockApiService = MockPokemonApiService();
-    mockNetworkInfo = MockNetworkInfo();
-    dataSource = PokemonRemoteDataSourceImpl(mockApiService, mockNetworkInfo);
+    dio = Dio();
+    dioAdapter = DioAdapter(dio: dio);
+    apiService = PokemonApiService(dio);
   });
 
-  group('getPokemonList', () {
-    const tLimit = 20;
-    const tOffset = 0;
-    final tPokemonModels = [
-      const PokemonModel(name: 'bulbasaur', imageUrl: 'url1'),
-      const PokemonModel(name: 'ivysaur', imageUrl: 'url2'),
-    ];
-    final tPokemonListResponse = PokemonListResponse(results: tPokemonModels);
-
+  group('PokemonApiService', () {
     test(
-      'GIVEN network is connected '
+      'GIVEN API returns pokemon list '
       'WHEN getPokemonList is called '
-      'THEN should return list of PokemonModel from API',
+      'THEN it should return PokemonListResponse',
       () async {
         // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(
-          () => mockApiService.getPokemonList(tLimit, tOffset),
-        ).thenAnswer((_) async => tPokemonListResponse);
+        const limit = 20;
+        const offset = 0;
+
+        dioAdapter.onGet(
+          '/pokemon',
+          (server) => server.reply(
+            200,
+            {
+              'results': [
+                {
+                  'name': 'bulbasaur',
+                  'url': 'https://pokeapi.co/api/v2/pokemon/1/',
+                },
+              ],
+            },
+          ),
+          queryParameters: {'limit': limit, 'offset': offset},
+        );
 
         // Act
-        final result = await dataSource.getPokemonList(
-          limit: tLimit,
-          offset: tOffset,
-        );
+        final result = await apiService.getPokemonList(limit, offset);
 
         // Assert
-        expect(result, equals(tPokemonModels));
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.getPokemonList(tLimit, tOffset)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
+        expect(result, isA<PokemonListResponse>());
+        expect(result.results.length, 1);
+        expect(result.results.first.name, 'bulbasaur');
       },
     );
 
     test(
-      'GIVEN network is not connected '
-      'WHEN getPokemonList is called '
-      'THEN should throw NetworkException',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
-
-        // Act
-        final call = dataSource.getPokemonList;
-
-        // Assert
-        expect(
-          () => call(limit: tLimit, offset: tOffset),
-          throwsA(
-            isA<NetworkException>().having(
-              (e) => e.message,
-              'message',
-              'No internet connection',
-            ),
-          ),
-        );
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN API service throws DioException '
-      'WHEN getPokemonList is called '
-      'THEN should throw ServerException',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockApiService.getPokemonList(tLimit, tOffset)).thenThrow(
-          DioException(
-            requestOptions: RequestOptions(path: ''),
-            message: 'Server error',
-          ),
-        );
-
-        // Act & Assert
-        await expectLater(
-          () => dataSource.getPokemonList(limit: tLimit, offset: tOffset),
-          throwsA(
-            isA<ServerException>().having(
-              (e) => e.message,
-              'message',
-              'Server error',
-            ),
-          ),
-        );
-
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.getPokemonList(tLimit, tOffset)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN API service throws DioException without message '
-      'WHEN getPokemonList is called '
-      'THEN should throw ServerException with default message',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockApiService.getPokemonList(tLimit, tOffset)).thenThrow(
-          DioException(requestOptions: RequestOptions(path: '')),
-        );
-
-        // Act & Assert
-        await expectLater(
-          () => dataSource.getPokemonList(limit: tLimit, offset: tOffset),
-          throwsA(
-            isA<ServerException>().having(
-              (e) => e.message,
-              'message',
-              'Failed to fetch Pokémon list',
-            ),
-          ),
-        );
-
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.getPokemonList(tLimit, tOffset)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-  });
-
-  group('getPokemonByType', () {
-    const tTypeName = 'fire';
-    final tPokemonModels = [
-      const PokemonModel(name: 'charmander', imageUrl: 'url4'),
-      const PokemonModel(name: 'charmeleon', imageUrl: 'url5'),
-    ];
-    final tPokemonListResponse = PokemonListResponse(results: tPokemonModels);
-
-    test(
-      'GIVEN network is connected '
+      'GIVEN API returns pokemon by type '
       'WHEN getPokemonByType is called '
-      'THEN should return list of PokemonModel from API',
+      'THEN it should return PokemonTypeResponse',
       () async {
         // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(
-          () => mockApiService.getPokemonByType(tTypeName),
-        ).thenAnswer((_) async => tPokemonListResponse);
+        const typeName = 'fire';
 
-        // Act
-        final result = await dataSource.getPokemonByType(tTypeName);
-
-        // Assert
-        expect(result, equals(tPokemonModels));
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.getPokemonByType(tTypeName)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN network is not connected '
-      'WHEN getPokemonByType is called '
-      'THEN should throw NetworkException',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
-
-        // Act
-        final call = dataSource.getPokemonByType;
-
-        // Assert
-        expect(
-          () => call(tTypeName),
-          throwsA(
-            isA<NetworkException>().having(
-              (e) => e.message,
-              'message',
-              'No internet connection',
-            ),
-          ),
-        );
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN API service throws DioException '
-      'WHEN getPokemonByType is called '
-      'THEN should throw ServerException',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockApiService.getPokemonByType(tTypeName)).thenThrow(
-          DioException(
-            requestOptions: RequestOptions(path: ''),
-            message: 'Type not found',
-          ),
-        );
-
-        // Act & Assert
-        await expectLater(
-          () => dataSource.getPokemonByType(tTypeName),
-          throwsA(
-            isA<ServerException>().having(
-              (e) => e.message,
-              'message',
-              'Type not found',
-            ),
-          ),
-        );
-
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.getPokemonByType(tTypeName)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN API service throws DioException without message '
-      'WHEN getPokemonByType is called '
-      'THEN should throw ServerException with default message',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockApiService.getPokemonByType(tTypeName)).thenThrow(
-          DioException(requestOptions: RequestOptions(path: '')),
-        );
-
-        // Act & Assert
-        await expectLater(
-          () => dataSource.getPokemonByType(tTypeName),
-          throwsA(
-            isA<ServerException>().having(
-              (e) => e.message,
-              'message',
-              'Failed to fetch Pokémon by type',
-            ),
-          ),
-        );
-
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.getPokemonByType(tTypeName)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-  });
-
-  group('searchPokemon', () {
-    const tQuery = 'Pikachu';
-    const tQueryLowercase = 'pikachu';
-    final tPokemonModels = [
-      const PokemonModel(name: 'pikachu', imageUrl: 'url25'),
-    ];
-    final tSearchResponse = PokemonListResponse(results: tPokemonModels);
-
-    test(
-      'GIVEN network is connected and query exists '
-      'WHEN searchPokemon is called '
-      'THEN should return list of PokemonModel with lowercase query',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(
-          () => mockApiService.searchPokemon(tQueryLowercase),
-        ).thenAnswer((_) async => tSearchResponse);
-
-        // Act
-        final result = await dataSource.searchPokemon(tQuery);
-
-        // Assert
-        expect(result, equals(tPokemonModels));
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.searchPokemon(tQueryLowercase)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN network is not connected '
-      'WHEN searchPokemon is called '
-      'THEN should throw NetworkException',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
-
-        // Act
-        final call = dataSource.searchPokemon;
-
-        // Assert
-        expect(
-          () => call(tQuery),
-          throwsA(
-            isA<NetworkException>().having(
-              (e) => e.message,
-              'message',
-              'No internet connection',
-            ),
-          ),
-        );
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN API service throws DioException with 404 status '
-      'WHEN searchPokemon is called '
-      'THEN should return empty list',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockApiService.searchPokemon(tQueryLowercase)).thenThrow(
-          DioException(
-            requestOptions: RequestOptions(path: ''),
-            response: Response(
-              requestOptions: RequestOptions(path: ''),
-              statusCode: 404,
-            ),
+        dioAdapter.onGet(
+          '/type/$typeName',
+          (server) => server.reply(
+            200,
+            {
+              'pokemon': [
+                {
+                  'pokemon': {
+                    'name': 'charmander',
+                    'url': 'https://pokeapi.co/api/v2/pokemon/4/',
+                  },
+                },
+              ],
+            },
           ),
         );
 
         // Act
-        final result = await dataSource.searchPokemon(tQuery);
+        final result = await apiService.getPokemonByType(typeName);
 
         // Assert
-        expect(result, equals(<PokemonModel>[]));
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.searchPokemon(tQueryLowercase)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
+        expect(result, isA<PokemonTypeResponse>());
+        expect(result.pokemon.length, 1);
+        expect(result.pokemon.first.pokemon.name, 'charmander');
       },
     );
 
     test(
-      'GIVEN API service throws DioException with non-404 status '
+      'GIVEN API returns pokemon search result '
       'WHEN searchPokemon is called '
-      'THEN should throw ServerException',
+      'THEN it should return PokemonListResponse',
       () async {
         // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockApiService.searchPokemon(tQueryLowercase)).thenThrow(
-          DioException(
-            requestOptions: RequestOptions(path: ''),
-            response: Response(
-              requestOptions: RequestOptions(path: ''),
-              statusCode: 500,
-            ),
-            message: 'Internal server error',
+        const query = 'pikachu';
+
+        dioAdapter.onGet(
+          '/pokemon/$query',
+          (server) => server.reply(
+            200,
+            {
+              'results': [
+                {
+                  'name': 'pikachu',
+                  'url': 'https://pokeapi.co/api/v2/pokemon/25/',
+                },
+              ],
+            },
           ),
         );
 
-        // Act & Assert
-        await expectLater(
-          () => dataSource.searchPokemon(tQuery),
-          throwsA(
-            isA<ServerException>().having(
-              (e) => e.message,
-              'message',
-              'Internal server error',
-            ),
-          ),
-        );
+        // Act
+        final result = await apiService.searchPokemon(query);
 
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.searchPokemon(tQueryLowercase)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
-      },
-    );
-
-    test(
-      'GIVEN API service throws DioException without message '
-      'WHEN searchPokemon is called '
-      'THEN should throw ServerException with default message',
-      () async {
-        // Arrange
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockApiService.searchPokemon(tQueryLowercase)).thenThrow(
-          DioException(
-            requestOptions: RequestOptions(path: ''),
-            response: Response(
-              requestOptions: RequestOptions(path: ''),
-              statusCode: 500,
-            ),
-          ),
-        );
-
-        // Act & Assert
-        await expectLater(
-          () => dataSource.searchPokemon(tQuery),
-          throwsA(
-            isA<ServerException>().having(
-              (e) => e.message,
-              'message',
-              'Failed to search Pokémon',
-            ),
-          ),
-        );
-
-        verify(() => mockNetworkInfo.isConnected).called(1);
-        verify(() => mockApiService.searchPokemon(tQueryLowercase)).called(1);
-        verifyNoMoreInteractions(mockNetworkInfo);
-        verifyNoMoreInteractions(mockApiService);
+        // Assert
+        expect(result, isA<PokemonListResponse>());
+        expect(result.results.length, 1);
+        expect(result.results.first.name, 'pikachu');
       },
     );
   });
