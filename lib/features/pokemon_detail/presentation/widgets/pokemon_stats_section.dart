@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pokedex_app/features/pokemon_detail/domain/entities/pokemon_stat.dart';
 
 class PokemonStatsSection extends StatelessWidget {
-  final List<PokemonStat> stats;
-
   const PokemonStatsSection({
-    super.key,
     required this.stats,
+    super.key,
   });
+  final List<PokemonStat> stats;
 
   String _getStatLabel(String statName) {
     switch (statName.toLowerCase()) {
@@ -56,7 +55,7 @@ class PokemonStatsSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -71,14 +70,14 @@ class PokemonStatsSection extends StatelessWidget {
             const SizedBox(height: 16),
             ...stats.map((stat) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
+                padding: const EdgeInsets.only(bottom: 12),
                 child: _StatBar(
                   label: _getStatLabel(stat.name),
                   value: stat.baseStat,
                   color: _getStatColor(stat.name),
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -87,15 +86,14 @@ class PokemonStatsSection extends StatelessWidget {
 }
 
 class _StatBar extends StatelessWidget {
-  final String label;
-  final int value;
-  final Color color;
-
   const _StatBar({
     required this.label,
     required this.value,
     required this.color,
   });
+  final String label;
+  final int value;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {

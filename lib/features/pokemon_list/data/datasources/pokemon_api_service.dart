@@ -6,26 +6,26 @@ import 'package:retrofit/retrofit.dart';
 
 part 'pokemon_api_service.g.dart';
 
-@RestApi(baseUrl: "https://pokeapi.co/api/v2")
+@RestApi(baseUrl: 'https://pokeapi.co/api/v2')
 abstract class PokemonApiService {
   factory PokemonApiService(Dio dio, {String baseUrl}) = _PokemonApiService;
 
-  @GET("/pokemon")
+  @GET('/pokemon')
   Future<PokemonListResponse> getPokemonList(
-    @Query("limit") int limit,
-    @Query("offset") int offset,
+    @Query('limit') int limit,
+    @Query('offset') int offset,
   );
 
-  @GET("/type/{typeName}")
+  @GET('/type/{typeName}')
   Future<PokemonTypeResponse> getPokemonByType(
-    @Path("typeName") String typeName,
+    @Path('typeName') String typeName,
   );
 
-  @GET("/pokemon/{query}")
+  @GET('/pokemon/{query}')
   Future<PokemonListResponse> searchPokemon(
-    @Path("query") String query,
+    @Path('query') String query,
   );
 
-  @GET("/type")
+  @GET('/type')
   Future<TypeListResponse> getPokemonTypes();
 }

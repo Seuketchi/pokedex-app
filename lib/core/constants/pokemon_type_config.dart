@@ -82,13 +82,12 @@ class PokemonTypeConfig {
 }
 
 class PokemonTypeData {
-  final String label;
-  final String? type;
-  final Color color;
-
   PokemonTypeData({
     required this.label,
     required this.type,
     required this.color,
   });
+  final String label;
+  final String? type;
+  final Color color;
 }

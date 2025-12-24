@@ -5,11 +5,11 @@ import 'package:pokedex_app/features/pokemon_list/presentation/bloc/pokemon_list
 
 class PokemonTypeFilter extends StatefulWidget {
   const PokemonTypeFilter({
-    super.key,
     required this.onTypeSelected,
+    super.key,
   });
 
-  final Function(String?) onTypeSelected;
+  final void Function(String?) onTypeSelected;
 
   @override
   State<PokemonTypeFilter> createState() => _PokemonTypeFilterState();
@@ -33,7 +33,7 @@ class _PokemonTypeFilterState extends State<PokemonTypeFilter> {
         if (state.isLoadingTypes) {
           return Container(
             height: 50,
-            margin: const EdgeInsets.only(bottom: 8.0),
+            margin: const EdgeInsets.only(bottom: 8),
             child: Center(
               child: SizedBox(
                 width: 20,
@@ -51,7 +51,7 @@ class _PokemonTypeFilterState extends State<PokemonTypeFilter> {
         if (state.typesErrorMessage != null) {
           return Container(
             height: 50,
-            margin: const EdgeInsets.only(bottom: 8.0),
+            margin: const EdgeInsets.only(bottom: 8),
             child: Center(
               child: Text(
                 'Failed to load types',
@@ -78,17 +78,17 @@ class _PokemonTypeFilterState extends State<PokemonTypeFilter> {
 
         return Container(
           height: 50,
-          margin: const EdgeInsets.only(bottom: 8.0),
+          margin: const EdgeInsets.only(bottom: 8),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             itemCount: types.length,
             itemBuilder: (context, index) {
               final typeData = types[index];
               final isSelected = _selectedType == typeData.type;
 
               return Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: const EdgeInsets.only(right: 8),
                 child: _TypeChip(
                   typeData: typeData,
                   isSelected: isSelected,
@@ -145,7 +145,7 @@ class _TypeChip extends StatelessWidget {
             decoration: BoxDecoration(
               color: isSelected
                   ? typeData.color
-                  : typeData.color.withOpacity(0.2),
+                  : typeData.color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: typeData.color,
@@ -154,7 +154,7 @@ class _TypeChip extends StatelessWidget {
               boxShadow: isSelected
                   ? [
                       BoxShadow(
-                        color: typeData.color.withOpacity(0.4),
+                        color: typeData.color.withValues(alpha: 0.4),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),

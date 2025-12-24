@@ -3,15 +3,14 @@ import 'package:pokedex_app/features/pokemon_detail/domain/entities/evolution_ch
 import 'package:pokedex_app/features/pokemon_detail/domain/entities/evolution_node.dart';
 
 class EvolutionChainSection extends StatelessWidget {
+  const EvolutionChainSection({
+    required this.chain,
+    super.key,
+  });
   final EvolutionChain chain;
 
-  const EvolutionChainSection({
-    super.key,
-    required this.chain,
-  });
-
   List<EvolutionNode> _flattenChain(EvolutionNode node) {
-    final List<EvolutionNode> result = [node];
+    final result = <EvolutionNode>[node];
     for (final evolution in node.evolvesTo) {
       result.addAll(_flattenChain(evolution));
     }
@@ -33,7 +32,7 @@ class EvolutionChainSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -72,16 +71,15 @@ class EvolutionChainSection extends StatelessWidget {
               _buildEvolutionChain(evolution),
             ],
           );
-        }).toList(),
+        }),
       ],
     );
   }
 }
 
 class _EvolutionItem extends StatelessWidget {
-  final EvolutionNode node;
-
   const _EvolutionItem({required this.node});
+  final EvolutionNode node;
 
   String _capitalize(String text) {
     if (text.isEmpty) return text;
@@ -137,15 +135,14 @@ class _EvolutionItem extends StatelessWidget {
 }
 
 class _EvolutionArrow extends StatelessWidget {
-  final String? trigger;
-  final int? minLevel;
-  final String? item;
-
   const _EvolutionArrow({
     this.trigger,
     this.minLevel,
     this.item,
   });
+  final String? trigger;
+  final int? minLevel;
+  final String? item;
 
   String _getEvolutionText() {
     if (minLevel != null) {
@@ -170,7 +167,7 @@ class _EvolutionArrow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         children: [
           Icon(

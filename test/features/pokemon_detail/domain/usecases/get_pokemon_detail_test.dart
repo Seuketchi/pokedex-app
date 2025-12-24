@@ -22,28 +22,26 @@ void main() {
     usecase = GetPokemonDetail(mockRepository);
   });
 
-  final testPokemonDetail = PokemonDetail(
+  const testPokemonDetail = PokemonDetail(
     id: 1,
     name: 'bulbasaur',
-    types: const [
+    types: [
       PokemonType(name: 'grass', slot: 1),
       PokemonType(name: 'poison', slot: 2),
     ],
     height: 7,
     weight: 69,
     baseExperience: 64,
-    stats: const [
+    stats: [
       PokemonStat(name: 'hp', baseStat: 45, effort: 0),
       PokemonStat(name: 'attack', baseStat: 49, effort: 0),
     ],
-    abilities: const [
+    abilities: [
       PokemonAbility(name: 'overgrow', isHidden: false, slot: 1),
     ],
-    sprites: const PokemonSprites(
+    sprites: PokemonSprites(
       frontDefault: 'https://example.com/1.png',
       frontShiny: 'https://example.com/1-shiny.png',
-      backDefault: null,
-      backShiny: null,
     ),
   );
 
@@ -59,14 +57,14 @@ void main() {
         when(
           () => mockRepository.getPokemonDetail(params.id),
         ).thenAnswer(
-          (_) async => ResultSuccess(testPokemonDetail),
+          (_) async => const ResultSuccess(testPokemonDetail),
         );
 
         // Act
         final result = await usecase(params);
 
         // Assert
-        expect(result, ResultSuccess(testPokemonDetail));
+        expect(result, const ResultSuccess(testPokemonDetail));
         verify(
           () => mockRepository.getPokemonDetail(params.id),
         ).called(1);

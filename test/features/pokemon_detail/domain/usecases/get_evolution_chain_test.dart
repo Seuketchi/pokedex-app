@@ -19,21 +19,17 @@ void main() {
     usecase = GetEvolutionChain(mockRepository);
   });
 
-  final testEvolutionChain = EvolutionChain(
+  const testEvolutionChain = EvolutionChain(
     id: 1,
     chain: EvolutionNode(
       speciesName: 'bulbasaur',
       speciesId: 1,
-      trigger: null,
-      minLevel: null,
-      item: null,
       evolvesTo: [
         EvolutionNode(
           speciesName: 'ivysaur',
           speciesId: 2,
           trigger: 'level-up',
           minLevel: 16,
-          item: null,
           evolvesTo: [],
         ),
       ],
@@ -52,14 +48,14 @@ void main() {
         when(
           () => mockRepository.getEvolutionChain(params.speciesId),
         ).thenAnswer(
-          (_) async => ResultSuccess(testEvolutionChain),
+          (_) async => const ResultSuccess(testEvolutionChain),
         );
 
         // Act
         final result = await usecase(params);
 
         // Assert
-        expect(result, ResultSuccess(testEvolutionChain));
+        expect(result, const ResultSuccess(testEvolutionChain));
         verify(
           () => mockRepository.getEvolutionChain(params.speciesId),
         ).called(1);

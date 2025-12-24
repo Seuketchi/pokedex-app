@@ -43,7 +43,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
 
     if (_allPokemon.isEmpty) {
       final allResult = await getPokemonList(
-        PaginationParams(limit: 1000, offset: 0),
+        PaginationParams(limit: 1000),
       );
       allResult.when(
         (pokemons) => _allPokemon = pokemons,
@@ -52,7 +52,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     }
 
     final result = await getPokemonList(
-      PaginationParams(limit: _limit, offset: 0),
+      PaginationParams(),
     );
 
     result.when(
@@ -75,7 +75,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   ) async {
     if (event.query.isEmpty) {
       final result = await getPokemonList(
-        PaginationParams(limit: _limit, offset: 0),
+        PaginationParams(),
       );
       result.when(
         (pokemons) => emit(
@@ -115,7 +115,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     emit(state.copyWith(isLoadingMore: true));
 
     final result = await getPokemonList(
-      PaginationParams(limit: _limit, offset: state.currentOffset),
+      PaginationParams(offset: state.currentOffset),
     );
 
     result.when(

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class EmptyStateView extends StatelessWidget {
-  final String message;
-  final String? subtitle;
-  final VoidCallback? onAction;
-  final String? actionLabel;
-
   const EmptyStateView({
     super.key,
     this.message = 'No Pokémon found',
@@ -13,12 +8,16 @@ class EmptyStateView extends StatelessWidget {
     this.onAction,
     this.actionLabel,
   });
+  final String message;
+  final String? subtitle;
+  final VoidCallback? onAction;
+  final String? actionLabel;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

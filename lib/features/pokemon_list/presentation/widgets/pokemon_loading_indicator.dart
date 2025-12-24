@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
-  final String? message;
-  final bool isSmall;
-
   const LoadingIndicator({
     super.key,
     this.message,
     this.isSmall = false,
   });
+  final String? message;
+  final bool isSmall;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class LoadMoreIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

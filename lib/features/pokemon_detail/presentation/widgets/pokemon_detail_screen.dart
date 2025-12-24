@@ -9,16 +9,16 @@ import 'package:pokedex_app/features/pokemon_list/presentation/widgets/pokemon_e
 import 'package:pokedex_app/features/pokemon_list/presentation/widgets/pokemon_loading_indicator.dart';
 
 class PokemonDetailScreen extends StatelessWidget {
-  final int pokemonId;
-  final String pokemonName;
-  final String imageUrl;
-
   const PokemonDetailScreen({
-    super.key,
     required this.pokemonId,
     required this.pokemonName,
     required this.imageUrl,
+    super.key,
   });
+
+  final int pokemonId;
+  final String pokemonName;
+  final String imageUrl;
 
   String _capitalize(String text) {
     if (text.isEmpty) return text;
@@ -75,7 +75,7 @@ class PokemonDetailScreen extends StatelessWidget {
                         return Icon(
                           Icons.catching_pokemon,
                           size: 120,
-                          color: Colors.white.withOpacity(0.5),
+                          color: Colors.white.withValues(alpha: 0.5),
                         );
                       },
                     ),
@@ -145,7 +145,7 @@ class PokemonDetailScreen extends StatelessWidget {
                       builder: (context, state) {
                         if (state.isLoadingEvolution) {
                           return const Padding(
-                            padding: EdgeInsets.all(32.0),
+                            padding: EdgeInsets.all(32),
                             child: LoadingIndicator(
                               message: 'Loading evolution chain...',
                               isSmall: true,
@@ -155,7 +155,7 @@ class PokemonDetailScreen extends StatelessWidget {
 
                         if (state.evolutionErrorMessage != null) {
                           return Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.all(16),
                             child: ErrorView(
                               message: state.evolutionErrorMessage!,
                               onRetry: () => _handleRetryEvolution(context),

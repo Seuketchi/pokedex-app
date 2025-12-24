@@ -15,15 +15,15 @@ analyzer:
     - '**/*.g.dart'
     - '**/*.freezed.dart'
     - '**/*.config.dart'
-    - '**/generated/**'
-    - 'build/**'
 
   errors:
     invalid_annotation_target: ignore
+    depend_on_referenced_packages: ignore
 
 linter:
   rules:
     public_member_api_docs: false
     sort_pub_dependencies: false
+    one_member_abstracts: false
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

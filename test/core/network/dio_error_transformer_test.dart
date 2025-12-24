@@ -19,10 +19,14 @@ void main() {
     });
 
     group(
-      'GIVEN DioException of network type WHEN transformed THEN returns NetworkException',
+      'GIVEN DioException of network type '
+      'WHEN transformed '
+      'THEN returns NetworkException',
       () {
         test(
-          'GIVEN connectionError WHEN transformed THEN returns NetworkException with message "Connection failed"',
+          'GIVEN connectionError '
+          'WHEN transformed '
+          'THEN returns NetworkException with message "Connection failed"',
           () {
             // Arrange
             final dioError = DioException(
@@ -43,7 +47,9 @@ void main() {
         );
 
         test(
-          'GIVEN connectionTimeout WHEN transformed THEN returns NetworkException with message "Connection failed"',
+          'GIVEN connectionTimeout '
+          'WHEN transformed '
+          'THEN returns NetworkException with message "Connection failed"',
           () {
             // Arrange
             final dioError = DioException(
@@ -64,7 +70,9 @@ void main() {
         );
 
         test(
-          'GIVEN sendTimeout WHEN transformed THEN returns NetworkException with message "Send timeout"',
+          'GIVEN sendTimeout '
+          'WHEN transformed '
+          'THEN returns NetworkException with message "Send timeout"',
           () {
             // Arrange
             final dioError = DioException(
@@ -82,7 +90,9 @@ void main() {
         );
 
         test(
-          'GIVEN receiveTimeout WHEN transformed THEN returns NetworkException with message "Receive timeout"',
+          'GIVEN receiveTimeout '
+          'WHEN transformed '
+          'THEN returns NetworkException with message "Receive timeout"',
           () {
             // Arrange
             final dioError = DioException(
@@ -100,7 +110,10 @@ void main() {
         );
 
         test(
-          'GIVEN unknown with SocketException WHEN transformed THEN returns NetworkException with message "No internet connection"',
+          'GIVEN unknown with SocketException '
+          'WHEN transformed '
+          'THEN returns NetworkException with message "No internet '
+          'connection"',
           () {
             // Arrange
             final dioError = DioException(
@@ -123,10 +136,15 @@ void main() {
     );
 
     group(
-      'GIVEN DioException of badResponse WHEN transformed THEN returns ServerException',
+      'GIVEN DioException of badResponse '
+      'WHEN transformed '
+      'THEN returns ServerException',
       () {
         test(
-          'GIVEN 400 Bad Request WHEN transformed THEN returns ServerException with statusCode 400 and message "Bad request"',
+          'GIVEN 400 Bad Request '
+          'WHEN transformed '
+          'THEN returns ServerException with statusCode 400 and '
+          'message "Bad request"',
           () {
             // Arrange
             final dioError = DioException(
@@ -149,7 +167,10 @@ void main() {
         );
 
         test(
-          'GIVEN 404 Not Found WHEN transformed THEN returns ServerException with statusCode 404 and message "Not found"',
+          'GIVEN 404 Not Found '
+          'WHEN transformed '
+          'THEN returns ServerException with statusCode '
+          '404 and message "Not found"',
           () {
             // Arrange
             final dioError = DioException(
@@ -172,7 +193,10 @@ void main() {
         );
 
         test(
-          'GIVEN 500 Internal Server Error WHEN transformed THEN returns ServerException with statusCode 500 and message "Internal server error"',
+          'GIVEN 500 Internal Server Error '
+          'WHEN transformed '
+          'THEN returns ServerException with statusCode '
+          '500 and message "Internal server error"',
           () {
             // Arrange
             final dioError = DioException(
@@ -195,7 +219,9 @@ void main() {
         );
 
         test(
-          'GIVEN response body with message field WHEN transformed THEN extracts custom error message',
+          'GIVEN response body with message field '
+          'WHEN transformed '
+          'THEN extracts custom error message',
           () {
             // Arrange
             final dioError = DioException(
@@ -221,7 +247,9 @@ void main() {
         );
 
         test(
-          'GIVEN response body with error field WHEN transformed THEN extracts custom error message',
+          'GIVEN response body with error field '
+          'WHEN transformed '
+          'THEN extracts custom error message',
           () {
             // Arrange
             final dioError = DioException(
@@ -246,10 +274,14 @@ void main() {
     );
 
     group(
-      'GIVEN other DioException types WHEN transformed THEN returns appropriate Exception',
+      'GIVEN other DioException types '
+      'WHEN transformed '
+      'THEN returns appropriate Exception',
       () {
         test(
-          'GIVEN cancel WHEN transformed THEN returns NetworkException with message "Request cancelled"',
+          'GIVEN cancel '
+          'WHEN transformed '
+          'THEN returns NetworkException with message "Request cancelled"',
           () {
             // Arrange
             final dioError = DioException(
@@ -270,7 +302,9 @@ void main() {
         );
 
         test(
-          'GIVEN badCertificate WHEN transformed THEN returns ServerException with message "Bad certificate"',
+          'GIVEN badCertificate '
+          'WHEN transformed '
+          'THEN returns ServerException with message "Bad certificate"',
           () {
             // Arrange
             final dioError = DioException(

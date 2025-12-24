@@ -3,12 +3,12 @@ import 'package:pokedex_app/core/constants/pokemon_type_config.dart';
 import 'package:pokedex_app/features/pokemon_detail/domain/entities/pokemon_type.dart';
 
 class PokemonTypesSection extends StatelessWidget {
-  final List<PokemonType> types;
-
   const PokemonTypesSection({
-    super.key,
     required this.types,
+    super.key,
   });
+
+  final List<PokemonType> types;
 
   String _capitalize(String text) {
     if (text.isEmpty) return text;
@@ -18,7 +18,7 @@ class PokemonTypesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: types.map((type) {
@@ -31,7 +31,7 @@ class PokemonTypesSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: color.withOpacity(0.4),
+                  color: Colors.black.withValues(alpha: 0.4),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),

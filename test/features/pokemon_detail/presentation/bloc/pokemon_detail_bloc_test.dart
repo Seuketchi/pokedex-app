@@ -34,46 +34,40 @@ void main() {
     registerFallbackValue(SpeciesIdParams(speciesId: 1));
   });
 
-  final testPokemonDetail = PokemonDetail(
+  const testPokemonDetail = PokemonDetail(
     id: 1,
     name: 'bulbasaur',
-    types: const [
+    types: [
       PokemonType(name: 'grass', slot: 1),
       PokemonType(name: 'poison', slot: 2),
     ],
     height: 7,
     weight: 69,
     baseExperience: 64,
-    stats: const [
+    stats: [
       PokemonStat(name: 'hp', baseStat: 45, effort: 0),
       PokemonStat(name: 'attack', baseStat: 49, effort: 0),
     ],
-    abilities: const [
+    abilities: [
       PokemonAbility(name: 'overgrow', isHidden: false, slot: 1),
     ],
-    sprites: const PokemonSprites(
+    sprites: PokemonSprites(
       frontDefault: 'https://example.com/1.png',
       frontShiny: 'https://example.com/1-shiny.png',
-      backDefault: null,
-      backShiny: null,
     ),
   );
 
-  final testEvolutionChain = EvolutionChain(
+  const testEvolutionChain = EvolutionChain(
     id: 1,
     chain: EvolutionNode(
       speciesName: 'bulbasaur',
       speciesId: 1,
-      trigger: null,
-      minLevel: null,
-      item: null,
       evolvesTo: [
         EvolutionNode(
           speciesName: 'ivysaur',
           speciesId: 2,
           trigger: 'level-up',
           minLevel: 16,
-          item: null,
           evolvesTo: [],
         ),
       ],
@@ -98,17 +92,15 @@ void main() {
         build: () {
           when(
             () => mockGetPokemonDetail(any()),
-          ).thenAnswer((_) async => ResultSuccess(testPokemonDetail));
+          ).thenAnswer((_) async => const ResultSuccess(testPokemonDetail));
           return bloc;
         },
         act: (bloc) => bloc.add(const PokemonDetailEvent.loadDetail(1)),
         expect: () => [
           const PokemonDetailState(
             isLoadingDetail: true,
-            detailErrorMessage: null,
           ),
-          PokemonDetailState(
-            isLoadingDetail: false,
+          const PokemonDetailState(
             pokemonDetail: testPokemonDetail,
           ),
         ],
@@ -133,10 +125,8 @@ void main() {
         expect: () => [
           const PokemonDetailState(
             isLoadingDetail: true,
-            detailErrorMessage: null,
           ),
           const PokemonDetailState(
-            isLoadingDetail: false,
             detailErrorMessage: 'Server error',
           ),
         ],
@@ -154,17 +144,15 @@ void main() {
         build: () {
           when(
             () => mockGetEvolutionChain(any()),
-          ).thenAnswer((_) async => ResultSuccess(testEvolutionChain));
+          ).thenAnswer((_) async => const ResultSuccess(testEvolutionChain));
           return bloc;
         },
         act: (bloc) => bloc.add(const PokemonDetailEvent.loadEvolution(1)),
         expect: () => [
           const PokemonDetailState(
             isLoadingEvolution: true,
-            evolutionErrorMessage: null,
           ),
-          PokemonDetailState(
-            isLoadingEvolution: false,
+          const PokemonDetailState(
             evolutionChain: testEvolutionChain,
           ),
         ],
@@ -191,10 +179,8 @@ void main() {
         expect: () => [
           const PokemonDetailState(
             isLoadingEvolution: true,
-            evolutionErrorMessage: null,
           ),
           const PokemonDetailState(
-            isLoadingEvolution: false,
             evolutionErrorMessage: 'No internet',
           ),
         ],
@@ -214,32 +200,29 @@ void main() {
         build: () {
           when(
             () => mockGetPokemonDetail(any()),
-          ).thenAnswer((_) async => ResultSuccess(testPokemonDetail));
+          ).thenAnswer((_) async => const ResultSuccess(testPokemonDetail));
           when(
             () => mockGetEvolutionChain(any()),
-          ).thenAnswer((_) async => ResultSuccess(testEvolutionChain));
+          ).thenAnswer((_) async => const ResultSuccess(testEvolutionChain));
           return bloc;
         },
         act: (bloc) {
-          bloc.add(const PokemonDetailEvent.loadDetail(1));
-          bloc.add(const PokemonDetailEvent.loadEvolution(1));
+          bloc
+            ..add(const PokemonDetailEvent.loadDetail(1))
+            ..add(const PokemonDetailEvent.loadEvolution(1));
         },
         expect: () => [
           const PokemonDetailState(
             isLoadingDetail: true,
-            detailErrorMessage: null,
           ),
-          PokemonDetailState(
-            isLoadingDetail: false,
+          const PokemonDetailState(
             pokemonDetail: testPokemonDetail,
           ),
-          PokemonDetailState(
+          const PokemonDetailState(
             isLoadingEvolution: true,
-            evolutionErrorMessage: null,
             pokemonDetail: testPokemonDetail,
           ),
-          PokemonDetailState(
-            isLoadingEvolution: false,
+          const PokemonDetailState(
             pokemonDetail: testPokemonDetail,
             evolutionChain: testEvolutionChain,
           ),

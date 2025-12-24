@@ -7,23 +7,23 @@ import 'package:retrofit/retrofit.dart';
 
 part 'pokemon_detail_api_service.g.dart';
 
-@RestApi(baseUrl: "https://pokeapi.co/api/v2")
+@RestApi(baseUrl: 'https://pokeapi.co/api/v2')
 abstract class PokemonDetailApiService {
   @factoryMethod
   factory PokemonDetailApiService(Dio dio) = _PokemonDetailApiService;
 
-  @GET("/pokemon/{id}")
+  @GET('/pokemon/{id}')
   Future<PokemonDetailModel> getPokemonDetail(
-    @Path("id") int id,
+    @Path('id') int id,
   );
 
-  @GET("/pokemon-species/{id}")
+  @GET('/pokemon-species/{id}')
   Future<PokemonSpeciesModel> getPokemonSpecies(
-    @Path("id") int id,
+    @Path('id') int id,
   );
 
-  @GET("/evolution-chain/{id}")
+  @GET('/evolution-chain/{id}')
   Future<EvolutionChainModel> getEvolutionChain(
-    @Path("id") int id,
+    @Path('id') int id,
   );
 }

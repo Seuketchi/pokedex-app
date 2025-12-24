@@ -12,18 +12,12 @@ void main() {
         const node1 = EvolutionNode(
           speciesName: 'bulbasaur',
           speciesId: 1,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [],
         );
 
         const node2 = EvolutionNode(
           speciesName: 'bulbasaur',
           speciesId: 1,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [],
         );
 
@@ -41,9 +35,6 @@ void main() {
         const node1 = EvolutionNode(
           speciesName: 'bulbasaur',
           speciesId: 1,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [],
         );
 
@@ -52,7 +43,6 @@ void main() {
           speciesId: 2,
           trigger: 'level-up',
           minLevel: 16,
-          item: null,
           evolvesTo: [],
         );
 
@@ -71,7 +61,6 @@ void main() {
           speciesName: 'vaporeon',
           speciesId: 134,
           trigger: 'use-item',
-          minLevel: null,
           item: 'water-stone',
           evolvesTo: [],
         );
@@ -97,7 +86,6 @@ void main() {
           speciesId: 3,
           trigger: 'level-up',
           minLevel: 32,
-          item: null,
           evolvesTo: [],
         );
 
@@ -106,16 +94,12 @@ void main() {
           speciesId: 2,
           trigger: 'level-up',
           minLevel: 16,
-          item: null,
           evolvesTo: [venusaur],
         );
 
         const bulbasaur = EvolutionNode(
           speciesName: 'bulbasaur',
           speciesId: 1,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [ivysaur],
         );
 

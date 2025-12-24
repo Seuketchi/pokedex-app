@@ -17,7 +17,9 @@ void main() {
 
   group('NetworkInfoImpl isConnected', () {
     test(
-      'GIVEN an initialized NetworkInfo class WHEN connected via WiFi THEN returns true',
+      'GIVEN an initialized NetworkInfo class '
+      'WHEN connected via WiFi '
+      'THEN returns true',
       () async {
         // Arrange
         when(
@@ -34,7 +36,9 @@ void main() {
     );
 
     test(
-      'GIVEN an initialized NetworkInfo class WHEN connected via mobile data THEN returns true',
+      'GIVEN an initialized NetworkInfo class '
+      'WHEN connected via mobile data '
+      'THEN returns true',
       () async {
         when(
           () => mockConnectivity.checkConnectivity(),
@@ -47,7 +51,9 @@ void main() {
     );
 
     test(
-      'GIVEN an initialized NetworkInfo class WHEN connected via ethernet THEN returns true',
+      'GIVEN an initialized NetworkInfo class '
+      'WHEN connected via ethernet '
+      'THEN returns true',
       () async {
         when(
           () => mockConnectivity.checkConnectivity(),
@@ -60,7 +66,9 @@ void main() {
     );
 
     test(
-      'GIVEN an initialized NetworkInfo class WHEN connected via multiple sources THEN returns true',
+      'GIVEN an initialized NetworkInfo class '
+      'WHEN connected via multiple sources '
+      'THEN returns true',
       () async {
         when(() => mockConnectivity.checkConnectivity()).thenAnswer(
           (_) async => [
@@ -76,7 +84,9 @@ void main() {
     );
 
     test(
-      'GIVEN an initialized NetworkInfo class WHEN not connected THEN returns false',
+      'GIVEN an initialized NetworkInfo class '
+      'WHEN not connected '
+      'THEN returns false',
       () async {
         when(
           () => mockConnectivity.checkConnectivity(),
@@ -89,7 +99,9 @@ void main() {
     );
 
     test(
-      'GIVEN an initialized NetworkInfo class WHEN connectivity result is empty THEN returns true',
+      'GIVEN an initialized NetworkInfo class '
+      'WHEN connectivity result is empty '
+      'THEN returns true',
       () async {
         when(
           () => mockConnectivity.checkConnectivity(),

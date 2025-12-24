@@ -20,7 +20,7 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
     int offset = 0,
   }) async {
     if (!await networkInfo.isConnected) {
-      throw const NetworkException(message: 'No internet connection');
+      throw const NetworkException();
     }
 
     try {
@@ -36,7 +36,7 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   @override
   Future<List<PokemonModel>> getPokemonByType(String typeName) async {
     if (!await networkInfo.isConnected) {
-      throw const NetworkException(message: 'No internet connection');
+      throw const NetworkException();
     }
 
     try {
@@ -52,7 +52,7 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   @override
   Future<List<PokemonModel>> searchPokemon(String query) async {
     if (!await networkInfo.isConnected) {
-      throw const NetworkException(message: 'No internet connection');
+      throw const NetworkException();
     }
 
     try {
@@ -69,13 +69,10 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
   @override
   Future<List<TypeModel>> getPokemonTypes() async {
     if (!await networkInfo.isConnected) {
-      throw const NetworkException(message: 'No internet connection');
+      throw const NetworkException();
     }
-    print('Fetching Pokémon types from API');
     try {
       final response = await apiService.getPokemonTypes();
-      print('API response received');
-      print('Fetched ${response.results.length} types from API');
       return response.results;
     } on DioException catch (e) {
       throw ServerException(

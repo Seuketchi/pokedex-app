@@ -7,7 +7,8 @@ void main() {
       test(
         'GIVEN valid JSON with pokemon list '
         'WHEN PokemonTypeResponse.fromJson is called '
-        'THEN it should return a PokemonTypeResponse with parsed PokemonTypeSlot list',
+        'THEN it should return a PokemonTypeResponse with parsed '
+        'PokemonTypeSlot list',
         () {
           // Arrange
           final json = {
@@ -35,12 +36,14 @@ void main() {
           expect(result.pokemon.first.pokemon.name, 'bulbasaur');
           expect(
             result.pokemon.first.pokemon.imageUrl,
-            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/'
+            'sprites/pokemon/1.png',
           );
           expect(result.pokemon.last.pokemon.name, 'ivysaur');
           expect(
             result.pokemon.last.pokemon.imageUrl,
-            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png',
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/'
+            'sprites/pokemon/2.png',
           );
         },
       );
@@ -87,7 +90,8 @@ void main() {
           expect(result.pokemon.name, 'charmander');
           expect(
             result.pokemon.imageUrl,
-            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/'
+            'sprites/pokemon/4.png',
           );
         },
       );

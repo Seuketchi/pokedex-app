@@ -13,9 +13,6 @@ void main() {
         const node = EvolutionNode(
           speciesName: 'bulbasaur',
           speciesId: 1,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [],
         );
 
@@ -43,18 +40,12 @@ void main() {
         const node1 = EvolutionNode(
           speciesName: 'bulbasaur',
           speciesId: 1,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [],
         );
 
         const node2 = EvolutionNode(
           speciesName: 'charmander',
           speciesId: 4,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [],
         );
 
@@ -82,9 +73,6 @@ void main() {
         const node = EvolutionNode(
           speciesName: 'eevee',
           speciesId: 133,
-          trigger: null,
-          minLevel: null,
-          item: null,
           evolvesTo: [],
         );
 

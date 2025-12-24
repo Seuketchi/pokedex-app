@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class PokemonCard extends StatelessWidget {
+  const PokemonCard({
+    required this.name,
+    required this.imageUrl,
+    super.key,
+    this.onTap,
+  });
+
   final String name;
   final String imageUrl;
   final VoidCallback? onTap;
-
-  const PokemonCard({
-    super.key,
-    required this.name,
-    required this.imageUrl,
-    this.onTap,
-  });
 
   String _capitalize(String text) {
     if (text.isEmpty) return text;
@@ -54,7 +54,7 @@ class PokemonCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),

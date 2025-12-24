@@ -25,9 +25,9 @@ class PokemonDetailRepositoryImpl implements PokemonDetailRepository {
       return Result.failure(NetworkFailure(message: e.message));
     } on ServerException catch (e) {
       return Result.failure(ServerFailure(message: e.message));
-    } catch (e) {
+    } on Exception catch (e) {
       return Result.failure(
-        ServerFailure(message: e is Exception ? e.toString() : 'Unknown error'),
+        ServerFailure(message: e.toString()),
       );
     }
   }
@@ -44,9 +44,9 @@ class PokemonDetailRepositoryImpl implements PokemonDetailRepository {
       return Result.failure(NetworkFailure(message: e.message));
     } on ServerException catch (e) {
       return Result.failure(ServerFailure(message: e.message));
-    } catch (e) {
+    } on Exception catch (e) {
       return Result.failure(
-        ServerFailure(message: e is Exception ? e.toString() : 'Unknown error'),
+        ServerFailure(message: e.toString()),
       );
     }
   }

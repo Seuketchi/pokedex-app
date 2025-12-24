@@ -7,7 +7,8 @@ void main() {
       test(
         'GIVEN valid JSON with linear evolution chain '
         'WHEN EvolutionChainModel.fromJson is called '
-        'THEN it should return a valid EvolutionChainModel with URL converted to ID',
+        'THEN it should return a valid EvolutionChainModel with URL converted '
+        'to ID',
         () {
           // Arrange
           final json = {
@@ -17,7 +18,7 @@ void main() {
                 'name': 'bulbasaur',
                 'url': 'https://pokeapi.co/api/v2/pokemon-species/1/',
               },
-              'evolution_details': [],
+              'evolution_details': <Map<String, dynamic>>[],
               'evolves_to': [
                 {
                   'species': {
@@ -44,7 +45,7 @@ void main() {
                           'item': null,
                         },
                       ],
-                      'evolves_to': [],
+                      'evolves_to': <Map<String, dynamic>>[],
                     },
                   ],
                 },
@@ -88,7 +89,7 @@ void main() {
                 'name': 'eevee',
                 'url': 'https://pokeapi.co/api/v2/pokemon-species/133/',
               },
-              'evolution_details': [],
+              'evolution_details': <Map<String, dynamic>>[],
               'evolves_to': [
                 {
                   'species': {
@@ -102,7 +103,7 @@ void main() {
                       'item': {'name': 'water-stone'},
                     },
                   ],
-                  'evolves_to': [],
+                  'evolves_to': <Map<String, dynamic>>[],
                 },
                 {
                   'species': {
@@ -116,7 +117,7 @@ void main() {
                       'item': {'name': 'thunder-stone'},
                     },
                   ],
-                  'evolves_to': [],
+                  'evolves_to': <Map<String, dynamic>>[],
                 },
                 {
                   'species': {
@@ -130,7 +131,7 @@ void main() {
                       'item': {'name': 'fire-stone'},
                     },
                   ],
-                  'evolves_to': [],
+                  'evolves_to': <Map<String, dynamic>>[],
                 },
               ],
             },
@@ -170,8 +171,8 @@ void main() {
                 'name': 'bulbasaur',
                 'url': 'https://pokeapi.co/api/v2/pokemon-species/1/',
               },
-              'evolution_details': [],
-              'evolves_to': [],
+              'evolution_details': <Map<String, dynamic>>[],
+              'evolves_to': <Map<String, dynamic>>[],
             },
           };
 

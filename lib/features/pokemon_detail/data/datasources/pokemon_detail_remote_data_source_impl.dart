@@ -18,7 +18,7 @@ class PokemonDetailRemoteDataSourceImpl
   @override
   Future<PokemonDetailModel> getPokemonDetail(int id) async {
     if (!await networkInfo.isConnected) {
-      throw const NetworkException(message: 'No internet connection');
+      throw const NetworkException();
     }
 
     try {
@@ -33,7 +33,7 @@ class PokemonDetailRemoteDataSourceImpl
   @override
   Future<EvolutionChainModel> getEvolutionChain(int speciesId) async {
     if (!await networkInfo.isConnected) {
-      throw const NetworkException(message: 'No internet connection');
+      throw const NetworkException();
     }
 
     try {

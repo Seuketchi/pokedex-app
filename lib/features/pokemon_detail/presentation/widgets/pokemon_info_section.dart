@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pokedex_app/features/pokemon_detail/domain/entities/pokemon_detail.dart';
 
 class PokemonInfoSection extends StatelessWidget {
-  final PokemonDetail detail;
-
   const PokemonInfoSection({
-    super.key,
     required this.detail,
+    super.key,
   });
+  final PokemonDetail detail;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class PokemonInfoSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -124,15 +123,14 @@ class PokemonInfoSection extends StatelessWidget {
 }
 
 class _InfoItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
   const _InfoItem({
     required this.icon,
     required this.label,
     required this.value,
   });
+  final IconData icon;
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {

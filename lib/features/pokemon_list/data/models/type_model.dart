@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pokedex_app/core/converter/id_to_image_url_converter.dart';
 import 'package:pokedex_app/core/converter/url_id_converter.dart';
 
 part 'type_model.freezed.dart';
