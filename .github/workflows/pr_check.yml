@@ -25,8 +25,8 @@ jobs:
 
       - name: Check Code Formatting
         run: |
-          echo "Checking code formatting (excluding generated files)..."
-          dart format --output=none --set-exit-if-changed lib/ test/
+          echo "Checking code formatting..."
+          git ls-files '*.dart' | grep -v -E '\.(g|freezed|config)\.dart$' | xargs dart format --output=none --set-exit-if-changed
 
       - name: Analyze Code
         run: flutter analyze --fatal-infos
