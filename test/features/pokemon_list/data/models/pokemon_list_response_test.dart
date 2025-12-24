@@ -7,7 +7,8 @@ void main() {
       test(
         'GIVEN valid JSON with results list '
         'WHEN PokemonListResponse.fromJson is called '
-        'THEN it should return a PokemonListResponse with parsed PokemonModel list',
+        'THEN it should return a PokemonListResponse with parsed '
+        'PokemonModel list',
         () {
           // Arrange
           final json = {
@@ -31,7 +32,8 @@ void main() {
           expect(result.results.first.name, 'bulbasaur');
           expect(
             result.results.first.imageUrl,
-            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/'
+            'sprites/pokemon/1.png',
           );
           expect(result.results.last.name, 'ivysaur');
         },

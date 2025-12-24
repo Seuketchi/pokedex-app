@@ -15,8 +15,9 @@ class PokemonListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          GetIt.I<PokemonListBloc>()..add(const PokemonListEvent.fetch()),
+      create: (_) => GetIt.I<PokemonListBloc>()
+        ..add(const PokemonListEvent.fetch())
+        ..add(const PokemonListEvent.fetchTypes()),
       child: const _PokemonListView(),
     );
   }
@@ -62,11 +63,11 @@ class _PokemonListView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
             Icon(Icons.catching_pokemon, color: Colors.white),
-            const SizedBox(width: 8),
-            const Text(
+            SizedBox(width: 8),
+            Text(
               'Pokédex',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -114,7 +115,6 @@ class _PokemonListView extends StatelessWidget {
 
                 if (state.pokemons.isEmpty) {
                   return EmptyStateView(
-                    message: 'No Pokémon found',
                     subtitle: 'Try searching for a different Pokémon or type',
                     actionLabel: 'Show All',
                     onAction: () => _handleClearSearch(context),

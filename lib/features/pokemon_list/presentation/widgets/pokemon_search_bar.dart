@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class PokemonSearchBar extends StatefulWidget {
-  final Function(String) onSearch;
-  final Function() onClear;
-  final Duration debounceDuration;
-
   const PokemonSearchBar({
-    super.key,
     required this.onSearch,
     required this.onClear,
+    super.key,
     this.debounceDuration = const Duration(milliseconds: 500),
   });
+
+  final void Function(String) onSearch;
+  final void Function() onClear;
+  final Duration debounceDuration;
 
   @override
   State<PokemonSearchBar> createState() => _PokemonSearchBarState();
@@ -52,13 +52,13 @@ class _PokemonSearchBarState extends State<PokemonSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

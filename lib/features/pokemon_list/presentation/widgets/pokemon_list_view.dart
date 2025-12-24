@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/features/pokemon_detail/presentation/pages/pokemon_detail_page.dart';
 
 class PokemonListView extends StatefulWidget {
+  const PokemonListView({
+    required this.pokemons,
+    required this.isLoadingMore,
+    required this.onLoadMore,
+    super.key,
+    this.loadMoreThreshold = 0.9,
+  });
+
   final List<PokemonItemData> pokemons;
   final bool isLoadingMore;
   final VoidCallback onLoadMore;
   final double loadMoreThreshold;
-
-  const PokemonListView({
-    super.key,
-    required this.pokemons,
-    required this.isLoadingMore,
-    required this.onLoadMore,
-    this.loadMoreThreshold = 0.9,
-  });
 
   @override
   State<PokemonListView> createState() => _PokemonListViewState();
@@ -62,25 +63,25 @@ class _PokemonListViewState extends State<PokemonListView> {
 }
 
 class PokemonItemData {
-  final String name;
-  final String imageUrl;
-  final VoidCallback? onTap;
-
   PokemonItemData({
     required this.name,
     required this.imageUrl,
     this.onTap,
   });
+
+  final String name;
+  final String imageUrl;
+  final VoidCallback? onTap;
 }
 
 class _PokemonListItem extends StatelessWidget {
-  final PokemonItemData pokemon;
-  final int index;
-
   const _PokemonListItem({
     required this.pokemon,
     required this.index,
   });
+
+  final PokemonItemData pokemon;
+  final int index;
 
   String _capitalize(String text) {
     if (text.isEmpty) return text;
@@ -91,7 +92,7 @@ class _PokemonListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       duration: Duration(milliseconds: 300 + (index * 50)),
-      opacity: 1.0,
+      opacity: 1,
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         elevation: 2,
@@ -99,7 +100,22 @@ class _PokemonListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: InkWell(
-          onTap: pokemon.onTap,
+          onTap: () async {
+            final segments = pokemon.imageUrl.split('/');
+            final id = int.parse(
+              segments[segments.length - 1].replaceAll('.png', ''),
+            );
+
+            await Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (_) => PokemonDetailPage(
+                  pokemonId: id,
+                  pokemonName: pokemon.name,
+                  imageUrl: pokemon.imageUrl,
+                ),
+              ),
+            );
+          },
           borderRadius: BorderRadius.circular(16),
           child: Container(
             padding: const EdgeInsets.all(12),
@@ -126,7 +142,7 @@ class _PokemonListItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withValues(alpha: 0.1),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -217,7 +233,7 @@ class _LoadMoreIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

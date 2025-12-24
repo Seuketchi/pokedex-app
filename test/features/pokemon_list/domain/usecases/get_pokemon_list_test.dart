@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pokedex_app/core/constants/api_constants.dart';
 import 'package:pokedex_app/core/error/failures.dart';
 import 'package:pokedex_app/core/result/result.dart';
 import 'package:pokedex_app/features/pokemon_list/domain/entities/pokemon.dart';
@@ -33,10 +32,7 @@ void main() {
       'THEN it should return the list from repository',
       () async {
         // Arrange
-        final params = PaginationParams(
-          limit: ApiConstants.defaultLimit,
-          offset: 0,
-        );
+        const params = PaginationParams();
 
         when(
           () => mockRepository.getPokemonList(
@@ -70,10 +66,7 @@ void main() {
         // Arrange
         const failure = ServerFailure(message: 'Server error');
 
-        final params = PaginationParams(
-          limit: ApiConstants.defaultLimit,
-          offset: 0,
-        );
+        const params = PaginationParams();
 
         when(
           () => mockRepository.getPokemonList(

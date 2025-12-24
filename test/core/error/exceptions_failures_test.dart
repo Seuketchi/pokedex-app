@@ -19,7 +19,9 @@ void main() {
   group('Exceptions', () {
     group('ServerException', () {
       test(
-        'GIVEN a ServerException with message and statusCode WHEN accessing properties THEN returns correct values',
+        'GIVEN a ServerException with message and statusCode '
+        'WHEN accessing properties '
+        'THEN returns correct values',
         () {
           // Arrange & Act
           const exception = ServerException(
@@ -34,7 +36,9 @@ void main() {
       );
 
       test(
-        'GIVEN a ServerException WHEN calling toString THEN returns formatted string',
+        'GIVEN a ServerException '
+        'WHEN calling toString '
+        'THEN returns formatted string',
         () {
           // Arrange
           const exception = ServerException(
@@ -52,7 +56,9 @@ void main() {
       );
 
       test(
-        'GIVEN a ServerException with null values WHEN accessing properties THEN returns null',
+        'GIVEN a ServerException with null values '
+        'WHEN accessing properties '
+        'THEN returns null',
         () {
           // Arrange & Act
           const exception = ServerException();
@@ -66,7 +72,8 @@ void main() {
 
     group('NetworkException', () {
       test(
-        'GIVEN a NetworkException with default message THEN message is correct',
+        'GIVEN a NetworkException with default message '
+        'THEN message is correct',
         () {
           // Arrange & Act
           const exception = NetworkException();
@@ -77,7 +84,8 @@ void main() {
       );
 
       test(
-        'GIVEN a NetworkException with custom message THEN message is correct',
+        'GIVEN a NetworkException with custom message '
+        'THEN message is correct',
         () {
           // Arrange & Act
           const exception = NetworkException(message: 'Timeout');
@@ -88,7 +96,8 @@ void main() {
       );
 
       test(
-        'GIVEN a NetworkException WHEN calling toString THEN returns formatted string',
+        'GIVEN a NetworkException WHEN calling toString '
+        'THEN returns formatted string',
         () {
           // Arrange
           const exception = NetworkException(message: 'Offline');
@@ -105,7 +114,8 @@ void main() {
 
     group('CacheException', () {
       test(
-        'GIVEN a CacheException with message THEN message is correct',
+        'GIVEN a CacheException with message '
+        'THEN message is correct',
         () {
           // Arrange & Act
           const exception = CacheException(message: 'Cache miss');
@@ -116,7 +126,9 @@ void main() {
       );
 
       test(
-        'GIVEN a CacheException WHEN calling toString THEN returns formatted string',
+        'GIVEN a CacheException '
+        'WHEN calling toString '
+        'THEN returns formatted string',
         () {
           // Arrange
           const exception = CacheException(message: 'Cache miss');
@@ -135,7 +147,8 @@ void main() {
   group('Failures', () {
     group('ServerFailure', () {
       test(
-        'GIVEN a ServerFailure with message and statusCode THEN props return correct values',
+        'GIVEN a ServerFailure with message and statusCode '
+        'THEN props return correct values',
         () {
           // Arrange & Act
           const failure = ServerFailure(
@@ -149,7 +162,8 @@ void main() {
       );
 
       test(
-        'GIVEN two ServerFailures with same properties THEN they are equal',
+        'GIVEN two ServerFailures with same properties '
+        'THEN they are equal',
         () {
           // Arrange
           const f1 = ServerFailure(message: 'Error', statusCode: 500);
@@ -161,7 +175,8 @@ void main() {
       );
 
       test(
-        'GIVEN two ServerFailures with different properties THEN they are not equal',
+        'GIVEN two ServerFailures with different properties '
+        'THEN they are not equal',
         () {
           // Arrange
           const f1 = ServerFailure(message: 'Error', statusCode: 500);
@@ -175,7 +190,8 @@ void main() {
 
     group('NetworkFailure', () {
       test(
-        'GIVEN a NetworkFailure with default message THEN message is correct',
+        'GIVEN a NetworkFailure with default message '
+        'THEN message is correct',
         () {
           // Arrange & Act
           const failure = NetworkFailure();
@@ -186,7 +202,8 @@ void main() {
       );
 
       test(
-        'GIVEN two NetworkFailures with same message THEN they are equal',
+        'GIVEN two NetworkFailures with same message '
+        'THEN they are equal',
         () {
           // Arrange
           const f1 = NetworkFailure();
@@ -200,7 +217,8 @@ void main() {
 
     group('CacheFailure', () {
       test(
-        'GIVEN a CacheFailure with message THEN message is correct',
+        'GIVEN a CacheFailure with message '
+        'THEN message is correct',
         () {
           // Arrange & Act
           const failure = CacheFailure(message: 'Cache failed');
@@ -211,7 +229,8 @@ void main() {
       );
 
       test(
-        'GIVEN two CacheFailures with same message THEN they are equal',
+        'GIVEN two CacheFailures with same message '
+        'THEN they are equal',
         () {
           // Arrange
           const f1 = CacheFailure(message: 'Cache error');

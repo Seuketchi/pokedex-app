@@ -27,7 +27,7 @@ void main() {
 
   final testPokemonListModel = [testPokemonModel];
 
-  final testPokemonEntity = const Pokemon(
+  const testPokemonEntity = Pokemon(
     name: 'bulbasaur',
     imageUrl:
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
@@ -52,7 +52,7 @@ void main() {
 
         expect(result, ResultSuccess(testPokemonListEntity));
         verify(
-          () => mockRemoteDataSource.getPokemonList(limit: 20, offset: 0),
+          () => mockRemoteDataSource.getPokemonList(),
         ).called(1);
         verifyNoMoreInteractions(mockRemoteDataSource);
       },
@@ -68,18 +68,18 @@ void main() {
             limit: any(named: 'limit'),
             offset: any(named: 'offset'),
           ),
-        ).thenThrow(const NetworkException(message: 'No internet connection'));
+        ).thenThrow(const NetworkException());
 
         final result = await repository.getPokemonList(limit: 20, offset: 0);
 
         expect(
           result,
           const Result<List<Pokemon>, Failure>.failure(
-            NetworkFailure(message: 'No internet connection'),
+            NetworkFailure(),
           ),
         );
         verify(
-          () => mockRemoteDataSource.getPokemonList(limit: 20, offset: 0),
+          () => mockRemoteDataSource.getPokemonList(),
         ).called(1);
         verifyNoMoreInteractions(mockRemoteDataSource);
       },
@@ -106,7 +106,7 @@ void main() {
           ),
         );
         verify(
-          () => mockRemoteDataSource.getPokemonList(limit: 20, offset: 0),
+          () => mockRemoteDataSource.getPokemonList(),
         ).called(1);
         verifyNoMoreInteractions(mockRemoteDataSource);
       },
