@@ -43,7 +43,7 @@ void main() {
       'THEN it should return the chain from repository',
       () async {
         // Arrange
-        final params = SpeciesIdParams(speciesId: 1);
+        const params = SpeciesIdParams(speciesId: 1);
 
         when(
           () => mockRepository.getEvolutionChain(params.speciesId),
@@ -70,7 +70,7 @@ void main() {
       () async {
         // Arrange
         const failure = ServerFailure(message: 'Server error');
-        final params = SpeciesIdParams(speciesId: 1);
+        const params = SpeciesIdParams(speciesId: 1);
 
         when(
           () => mockRepository.getEvolutionChain(params.speciesId),

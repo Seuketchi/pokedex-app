@@ -52,7 +52,7 @@ void main() {
       'THEN it should return the detail from repository',
       () async {
         // Arrange
-        final params = PokemonIdParams(id: 1);
+        const params = PokemonIdParams(id: 1);
 
         when(
           () => mockRepository.getPokemonDetail(params.id),
@@ -79,7 +79,7 @@ void main() {
       () async {
         // Arrange
         const failure = ServerFailure(message: 'Server error');
-        final params = PokemonIdParams(id: 1);
+        const params = PokemonIdParams(id: 1);
 
         when(
           () => mockRepository.getPokemonDetail(params.id),

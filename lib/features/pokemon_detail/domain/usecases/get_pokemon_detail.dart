@@ -1,9 +1,12 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pokedex_app/core/error/failures.dart';
 import 'package:pokedex_app/core/result/result.dart';
 import 'package:pokedex_app/core/usecases/usecase.dart';
 import 'package:pokedex_app/features/pokemon_detail/domain/entities/pokemon_detail.dart';
 import 'package:pokedex_app/features/pokemon_detail/domain/repositories/pokemon_detail_repository.dart';
+
+part 'get_pokemon_detail.freezed.dart';
 
 @injectable
 class GetPokemonDetail implements UseCase<PokemonDetail, PokemonIdParams> {
@@ -19,8 +22,7 @@ class GetPokemonDetail implements UseCase<PokemonDetail, PokemonIdParams> {
   }
 }
 
-class PokemonIdParams {
-  PokemonIdParams({required this.id});
-
-  final int id;
+@freezed
+class PokemonIdParams with _$PokemonIdParams {
+  const factory PokemonIdParams({required int id}) = _PokemonIdParams;
 }

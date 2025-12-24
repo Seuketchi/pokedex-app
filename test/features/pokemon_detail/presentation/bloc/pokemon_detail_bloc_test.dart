@@ -30,8 +30,8 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(PokemonIdParams(id: 1));
-    registerFallbackValue(SpeciesIdParams(speciesId: 1));
+    registerFallbackValue(const PokemonIdParams(id: 1));
+    registerFallbackValue(const SpeciesIdParams(speciesId: 1));
   });
 
   const testPokemonDetail = PokemonDetail(
@@ -105,7 +105,9 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(() => mockGetPokemonDetail(PokemonIdParams(id: 1))).called(1);
+          verify(
+            () => mockGetPokemonDetail(const PokemonIdParams(id: 1)),
+          ).called(1);
         },
       );
 
@@ -131,7 +133,9 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(() => mockGetPokemonDetail(PokemonIdParams(id: 1))).called(1);
+          verify(
+            () => mockGetPokemonDetail(const PokemonIdParams(id: 1)),
+          ).called(1);
         },
       );
     });
@@ -158,7 +162,7 @@ void main() {
         ],
         verify: (_) {
           verify(
-            () => mockGetEvolutionChain(SpeciesIdParams(speciesId: 1)),
+            () => mockGetEvolutionChain(const SpeciesIdParams(speciesId: 1)),
           ).called(1);
         },
       );
@@ -186,7 +190,7 @@ void main() {
         ],
         verify: (_) {
           verify(
-            () => mockGetEvolutionChain(SpeciesIdParams(speciesId: 1)),
+            () => mockGetEvolutionChain(const SpeciesIdParams(speciesId: 1)),
           ).called(1);
         },
       );

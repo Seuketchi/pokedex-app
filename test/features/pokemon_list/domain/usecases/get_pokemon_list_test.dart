@@ -32,7 +32,7 @@ void main() {
       'THEN it should return the list from repository',
       () async {
         // Arrange
-        final params = PaginationParams();
+        const params = PaginationParams();
 
         when(
           () => mockRepository.getPokemonList(
@@ -66,7 +66,7 @@ void main() {
         // Arrange
         const failure = ServerFailure(message: 'Server error');
 
-        final params = PaginationParams();
+        const params = PaginationParams();
 
         when(
           () => mockRepository.getPokemonList(
