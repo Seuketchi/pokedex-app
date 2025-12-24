@@ -23,8 +23,8 @@ jobs:
       - name: Generate Code
         run: dart run build_runner build --delete-conflicting-outputs
 
-      - name: Format Code
-        run: dart format .
+      - name: Check Code Formatting
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze Code
         run: flutter analyze --fatal-infos
@@ -41,3 +41,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           file: coverage/lcov.info
+          fail_ci_if_error: false
