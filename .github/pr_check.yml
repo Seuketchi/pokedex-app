@@ -24,7 +24,9 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Check Code Formatting
-        run: dart format --output=none --set-exit-if-changed .
+        run: |
+          echo "Checking code formatting (excluding generated files)..."
+          dart format --output=none --set-exit-if-changed lib/ test/
 
       - name: Analyze Code
         run: flutter analyze --fatal-infos
