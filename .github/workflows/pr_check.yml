@@ -38,11 +38,7 @@ jobs:
         uses: VeryGoodOpenSource/very_good_coverage@v2
         with:
           min_coverage: 80
-          exclude: |
-            **/*.g.dart
-            **/*.freezed.dart
-            **/*.config.dart
-            **/injection_container.config.dart
+          exclude: '**/*.g.dart **/*.freezed.dart **/*.config.dart'
 
       - name: Upload Coverage Report
         uses: codecov/codecov-action@v3
