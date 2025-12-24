@@ -12,4 +12,6 @@ class PokemonListEvent with _$PokemonListEvent {
   const factory PokemonListEvent.getByType(String typeName) = _GetByType;
 
   const factory PokemonListEvent.search(String query) = _Search;
+
+  const factory PokemonListEvent.fetchTypes() = _FetchTypes;
 }

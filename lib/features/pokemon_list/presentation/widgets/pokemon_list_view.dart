@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/features/pokemon_detail/presentation/pages/pokemon_detail_page.dart';
 
 class PokemonListView extends StatefulWidget {
   final List<PokemonItemData> pokemons;
@@ -99,7 +100,22 @@ class _PokemonListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: InkWell(
-          onTap: pokemon.onTap,
+          onTap: () {
+            final segments = pokemon.imageUrl.split('/');
+            final id = int.parse(
+              segments[segments.length - 1].replaceAll('.png', ''),
+            );
+
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => PokemonDetailPage(
+                  pokemonId: id,
+                  pokemonName: pokemon.name,
+                  imageUrl: pokemon.imageUrl,
+                ),
+              ),
+            );
+          },
           borderRadius: BorderRadius.circular(16),
           child: Container(
             padding: const EdgeInsets.all(12),

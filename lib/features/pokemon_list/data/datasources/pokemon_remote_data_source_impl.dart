@@ -1,4 +1,3 @@
-// features/pokemon_list/data/datasources/pokemon_remote_data_source_impl.dart
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pokedex_app/core/error/exceptions.dart';
@@ -6,6 +5,7 @@ import 'package:pokedex_app/core/network/network_info.dart';
 import 'package:pokedex_app/features/pokemon_list/data/datasources/pokemon_api_service.dart';
 import 'package:pokedex_app/features/pokemon_list/data/datasources/pokemon_remote_data_source.dart';
 import 'package:pokedex_app/features/pokemon_list/data/models/pokemon_model.dart';
+import 'package:pokedex_app/features/pokemon_list/data/models/type_model.dart';
 
 @Singleton(as: PokemonRemoteDataSource)
 class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
@@ -41,7 +41,6 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
 
     try {
       final response = await apiService.getPokemonByType(typeName);
-      // Extract the pokemon from the nested structure
       return response.pokemon.map((slot) => slot.pokemon).toList();
     } on DioException catch (e) {
       throw ServerException(
@@ -64,6 +63,24 @@ class PokemonRemoteDataSourceImpl implements PokemonRemoteDataSource {
         return [];
       }
       throw ServerException(message: e.message ?? 'Failed to search Pokémon');
+    }
+  }
+
+  @override
+  Future<List<TypeModel>> getPokemonTypes() async {
+    if (!await networkInfo.isConnected) {
+      throw const NetworkException(message: 'No internet connection');
+    }
+    print('Fetching Pokémon types from API');
+    try {
+      final response = await apiService.getPokemonTypes();
+      print('API response received');
+      print('Fetched ${response.results.length} types from API');
+      return response.results;
+    } on DioException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Failed to fetch Pokémon types',
+      );
     }
   }
 }

@@ -1,10 +1,12 @@
-// pokemon_list_bloc.dart
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pokedex_app/core/usecases/usecase.dart';
 import 'package:pokedex_app/features/pokemon_list/domain/entities/pokemon.dart';
+import 'package:pokedex_app/features/pokemon_list/domain/entities/type.dart';
 import 'package:pokedex_app/features/pokemon_list/domain/usecases/filter_by_type.dart';
 import 'package:pokedex_app/features/pokemon_list/domain/usecases/get_pokemon_list.dart';
+import 'package:pokedex_app/features/pokemon_list/domain/usecases/get_pokemon_types.dart';
 import 'package:pokedex_app/features/pokemon_list/domain/usecases/search_pokemon.dart';
 
 part 'pokemon_list_bloc.freezed.dart';
@@ -17,18 +19,21 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     this.getPokemonList,
     this.getPokemonByType,
     this.searchPokemon,
+    this.getPokemonTypes,
   ) : super(const PokemonListState()) {
     on<_Fetch>(_onFetch);
     on<_LoadMore>(_onLoadMore);
     on<_GetByType>(_onGetByType);
     on<_Search>(_onSearch);
+    on<_FetchTypes>(_onFetchTypes);
   }
 
   final GetPokemonList getPokemonList;
   final FilterByType getPokemonByType;
   final SearchPokemon searchPokemon;
+  final GetPokemonTypes getPokemonTypes;
   static const _limit = 20;
-  List<Pokemon> _allPokemon = []; // Cache all pokemon
+  List<Pokemon> _allPokemon = [];
 
   Future<void> _onFetch(
     _Fetch event,
@@ -36,7 +41,6 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   ) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
 
-    // Load all pokemon once for search cache
     if (_allPokemon.isEmpty) {
       final allResult = await getPokemonList(
         PaginationParams(limit: 1000, offset: 0),
@@ -70,7 +74,6 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     Emitter<PokemonListState> emit,
   ) async {
     if (event.query.isEmpty) {
-      // Return to paginated view
       final result = await getPokemonList(
         PaginationParams(limit: _limit, offset: 0),
       );
@@ -98,7 +101,7 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
       state.copyWith(
         isLoading: false,
         pokemons: filtered,
-        hasReachedMax: true, // Disable pagination during search
+        hasReachedMax: true,
       ),
     );
   }
@@ -145,6 +148,29 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
       (pokemons) => emit(state.copyWith(isLoading: false, pokemons: pokemons)),
       failure: (failure) =>
           emit(state.copyWith(isLoading: false, errorMessage: failure.message)),
+    );
+  }
+
+  Future<void> _onFetchTypes(
+    _FetchTypes event,
+    Emitter<PokemonListState> emit,
+  ) async {
+    emit(state.copyWith(isLoadingTypes: true, typesErrorMessage: null));
+
+    final result = await getPokemonTypes(const NoParams());
+    result.when(
+      (types) => emit(
+        state.copyWith(
+          isLoadingTypes: false,
+          types: types,
+        ),
+      ),
+      failure: (failure) => emit(
+        state.copyWith(
+          isLoadingTypes: false,
+          typesErrorMessage: failure.message,
+        ),
+      ),
     );
   }
 }

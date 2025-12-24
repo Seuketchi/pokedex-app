@@ -15,8 +15,9 @@ class PokemonListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          GetIt.I<PokemonListBloc>()..add(const PokemonListEvent.fetch()),
+      create: (_) => GetIt.I<PokemonListBloc>()
+        ..add(const PokemonListEvent.fetch())
+        ..add(const PokemonListEvent.fetchTypes()),
       child: const _PokemonListView(),
     );
   }

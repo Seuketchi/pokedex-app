@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pokedex_app/features/pokemon_list/data/models/pokemon_list_response.dart';
 import 'package:pokedex_app/features/pokemon_list/data/models/pokemon_type_response.dart';
+import 'package:pokedex_app/features/pokemon_list/data/models/type_list_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'pokemon_api_service.g.dart';
@@ -24,4 +25,7 @@ abstract class PokemonApiService {
   Future<PokemonListResponse> searchPokemon(
     @Path("query") String query,
   );
+
+  @GET("/type")
+  Future<TypeListResponse> getPokemonTypes();
 }
