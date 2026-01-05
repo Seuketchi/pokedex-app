@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pokedex_app/features/battle_arena/data/datasources/battle_api_service.dart';
 import 'package:pokedex_app/features/pokemon_detail/data/datasources/pokemon_detail_api_service.dart';
 import 'package:pokedex_app/features/pokemon_list/data/datasources/pokemon_api_service.dart';
 
@@ -17,5 +18,10 @@ abstract class NetworkModule {
   @singleton
   PokemonDetailApiService providePokemonDetailApiService(Dio dio) {
     return PokemonDetailApiService(dio);
+  }
+
+  @singleton
+  BattleApiService provideBattleApiService(Dio dio) {
+    return BattleApiService(dio);
   }
 }
