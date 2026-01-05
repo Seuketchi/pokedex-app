@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pokedex_app/features/battle_arena/presentation/pages/pokemon_selection_page.dart';
 import 'package:pokedex_app/features/pokemon_list/presentation/bloc/pokemon_list_bloc.dart';
 import 'package:pokedex_app/features/pokemon_list/presentation/widgets/pokemon_empty_view.dart';
 import 'package:pokedex_app/features/pokemon_list/presentation/widgets/pokemon_error_view.dart';
@@ -137,6 +138,25 @@ class _PokemonListView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (_) => const PokemonSelectionPage(),
+            ),
+          );
+        },
+        backgroundColor: Colors.red[600],
+        icon: const Icon(Icons.sports_kabaddi, color: Colors.white),
+        label: const Text(
+          'Battle',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
