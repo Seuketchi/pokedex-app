@@ -134,7 +134,8 @@ class BattleBloc extends Bloc<BattleEvent, BattleState> {
           battleLogs: [
             BattleLog(
               message:
-                  'Battle started! ${playerGoesFirst ? playerBattlePokemon.name : opponentBattlePokemon.name} goes first!',
+                  'Battle started! ${playerGoesFirst ? playerBattlePokemon.name
+                      : opponentBattlePokemon.name} goes first!',
               timestamp: DateTime.now(),
             ),
           ],
