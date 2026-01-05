@@ -37,7 +37,8 @@ void main() {
     });
 
     test(
-      'should create TypeEffectivenessModel from JSON with no damage relationships',
+      'should create TypeEffectivenessModel from JSON with no damage'
+      ' relationships',
       () {
         // arrange
         final json = {

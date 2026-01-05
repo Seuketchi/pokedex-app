@@ -8,19 +8,19 @@ void main() {
       'should map TypeEffectivenessModel to TypeEffectiveness domain entity',
       () {
         // arrange
-        final typeEffectivenessModel = TypeEffectivenessModel(
+        const typeEffectivenessModel = TypeEffectivenessModel(
           name: 'fire',
           damageRelations: DamageRelationsModel(
-            doubleDamageTo: const [
+            doubleDamageTo: [
               TypeNameModel(name: 'grass'),
               TypeNameModel(name: 'ice'),
               TypeNameModel(name: 'bug'),
             ],
-            halfDamageTo: const [
+            halfDamageTo: [
               TypeNameModel(name: 'water'),
               TypeNameModel(name: 'rock'),
             ],
-            noDamageTo: const <TypeNameModel>[],
+            noDamageTo: <TypeNameModel>[],
           ),
         );
 
@@ -39,12 +39,12 @@ void main() {
 
     test('should handle empty damage relations lists', () {
       // arrange
-      final typeEffectivenessModel = TypeEffectivenessModel(
+      const typeEffectivenessModel = TypeEffectivenessModel(
         name: 'normal',
         damageRelations: DamageRelationsModel(
-          doubleDamageTo: const <TypeNameModel>[],
-          halfDamageTo: const <TypeNameModel>[],
-          noDamageTo: const <TypeNameModel>[],
+          doubleDamageTo: <TypeNameModel>[],
+          halfDamageTo: <TypeNameModel>[],
+          noDamageTo: <TypeNameModel>[],
         ),
       );
 
@@ -60,12 +60,12 @@ void main() {
 
     test('should handle type with no damage to certain types', () {
       // arrange
-      final typeEffectivenessModel = TypeEffectivenessModel(
+      const typeEffectivenessModel = TypeEffectivenessModel(
         name: 'normal',
         damageRelations: DamageRelationsModel(
-          doubleDamageTo: const <TypeNameModel>[],
-          halfDamageTo: const <TypeNameModel>[],
-          noDamageTo: const [
+          doubleDamageTo: <TypeNameModel>[],
+          halfDamageTo: <TypeNameModel>[],
+          noDamageTo: [
             TypeNameModel(name: 'ghost'),
           ],
         ),
@@ -84,19 +84,19 @@ void main() {
 
     test('should handle complex type effectiveness mapping', () {
       // arrange - Electric type example
-      final typeEffectivenessModel = TypeEffectivenessModel(
+      const typeEffectivenessModel = TypeEffectivenessModel(
         name: 'electric',
         damageRelations: DamageRelationsModel(
-          doubleDamageTo: const [
+          doubleDamageTo: [
             TypeNameModel(name: 'flying'),
             TypeNameModel(name: 'water'),
           ],
-          halfDamageTo: const [
+          halfDamageTo: [
             TypeNameModel(name: 'electric'),
             TypeNameModel(name: 'grass'),
             TypeNameModel(name: 'dragon'),
           ],
-          noDamageTo: const [
+          noDamageTo: [
             TypeNameModel(name: 'ground'),
           ],
         ),
@@ -117,15 +117,15 @@ void main() {
 
     test('should preserve type name correctly', () {
       // arrange
-      final typeEffectivenessModel = TypeEffectivenessModel(
+      const typeEffectivenessModel = TypeEffectivenessModel(
         name: 'psychic',
         damageRelations: DamageRelationsModel(
-          doubleDamageTo: const [
+          doubleDamageTo: [
             TypeNameModel(name: 'fighting'),
             TypeNameModel(name: 'poison'),
           ],
-          halfDamageTo: const <TypeNameModel>[],
-          noDamageTo: const <TypeNameModel>[],
+          halfDamageTo: <TypeNameModel>[],
+          noDamageTo: <TypeNameModel>[],
         ),
       );
 
@@ -139,16 +139,16 @@ void main() {
 
     test('should handle single type in each category', () {
       // arrange
-      final typeEffectivenessModel = TypeEffectivenessModel(
+      const typeEffectivenessModel = TypeEffectivenessModel(
         name: 'steel',
         damageRelations: DamageRelationsModel(
-          doubleDamageTo: const [
+          doubleDamageTo: [
             TypeNameModel(name: 'rock'),
           ],
-          halfDamageTo: const [
+          halfDamageTo: [
             TypeNameModel(name: 'fire'),
           ],
-          noDamageTo: const [
+          noDamageTo: [
             TypeNameModel(name: 'ghost'),
           ],
         ),
@@ -169,24 +169,24 @@ void main() {
 
     test('should handle multiple types of the same effectiveness', () {
       // arrange - Fighting type example
-      final typeEffectivenessModel = TypeEffectivenessModel(
+      const typeEffectivenessModel = TypeEffectivenessModel(
         name: 'fighting',
         damageRelations: DamageRelationsModel(
-          doubleDamageTo: const [
+          doubleDamageTo: [
             TypeNameModel(name: 'normal'),
             TypeNameModel(name: 'rock'),
             TypeNameModel(name: 'steel'),
             TypeNameModel(name: 'ice'),
             TypeNameModel(name: 'dark'),
           ],
-          halfDamageTo: const [
+          halfDamageTo: [
             TypeNameModel(name: 'flying'),
             TypeNameModel(name: 'poison'),
             TypeNameModel(name: 'bug'),
             TypeNameModel(name: 'psychic'),
             TypeNameModel(name: 'fairy'),
           ],
-          noDamageTo: const [
+          noDamageTo: [
             TypeNameModel(name: 'ghost'),
           ],
         ),

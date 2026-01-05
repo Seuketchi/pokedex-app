@@ -45,18 +45,18 @@ void main() {
       ),
     ];
 
-    final tTypeEffectivenessModel = TypeEffectivenessModel(
+    const tTypeEffectivenessModel = TypeEffectivenessModel(
       name: 'fire',
       damageRelations: DamageRelationsModel(
-        doubleDamageTo: const [
+        doubleDamageTo: [
           TypeNameModel(name: 'grass'),
           TypeNameModel(name: 'ice'),
         ],
-        halfDamageTo: const [
+        halfDamageTo: [
           TypeNameModel(name: 'water'),
           TypeNameModel(name: 'rock'),
         ],
-        noDamageTo: const <TypeNameModel>[],
+        noDamageTo: <TypeNameModel>[],
       ),
     );
 
@@ -74,7 +74,7 @@ void main() {
 
           // assert
           expect(result, isA<ResultSuccess<List<Move>, Failure>>());
-          final moves = (result as ResultSuccess).value;
+          final moves = (result as ResultSuccess<List<Move>, Failure>).value;
           expect(moves, hasLength(2));
           expect(moves.first.name, equals('tackle'));
           expect(moves.first.power, equals(40));
@@ -97,7 +97,8 @@ void main() {
 
           // assert
           expect(result, isA<ResultFailure<List<Move>, Failure>>());
-          final failure = (result as ResultFailure).failure;
+          final failure =
+              (result as ResultFailure<List<Move>, Failure>).failure;
           expect(failure, isA<NetworkFailure>());
           expect(failure.message, equals('No internet connection'));
         },
@@ -117,7 +118,8 @@ void main() {
 
           // assert
           expect(result, isA<ResultFailure<List<Move>, Failure>>());
-          final failure = (result as ResultFailure).failure;
+          final failure =
+              (result as ResultFailure<List<Move>, Failure>).failure;
           expect(failure, isA<ServerFailure>());
           expect(failure.message, equals(tErrorMessage));
         },
@@ -137,7 +139,8 @@ void main() {
 
           // assert
           expect(result, isA<ResultFailure<List<Move>, Failure>>());
-          final failure = (result as ResultFailure).failure;
+          final failure =
+              (result as ResultFailure<List<Move>, Failure>).failure;
           expect(failure, isA<ServerFailure>());
           expect(failure.message, contains(tErrorMessage));
         },
@@ -173,7 +176,7 @@ void main() {
 
         // assert
         expect(result, isA<ResultSuccess<List<Move>, Failure>>());
-        final moves = (result as ResultSuccess).value;
+        final moves = (result as ResultSuccess<List<Move>, Failure>).value;
         expect(moves.every((Move move) => move.power > 0), isTrue);
       });
     });
@@ -192,7 +195,8 @@ void main() {
 
           // assert
           expect(result, isA<ResultSuccess<TypeEffectiveness, Failure>>());
-          final effectiveness = (result as ResultSuccess).value;
+          final effectiveness =
+              (result as ResultSuccess<TypeEffectiveness, Failure>).value;
           expect(effectiveness.doubleDamageTo, contains('grass'));
           expect(effectiveness.halfDamageTo, contains('water'));
           verify(() => mockRemoteDataSource.getTypeEffectiveness(tTypeName));
@@ -213,7 +217,8 @@ void main() {
 
           // assert
           expect(result, isA<ResultFailure<TypeEffectiveness, Failure>>());
-          final failure = (result as ResultFailure).failure;
+          final failure =
+              (result as ResultFailure<TypeEffectiveness, Failure>).failure;
           expect(failure, isA<NetworkFailure>());
           expect(failure.message, equals('No internet connection'));
         },
@@ -233,7 +238,8 @@ void main() {
 
           // assert
           expect(result, isA<ResultFailure<TypeEffectiveness, Failure>>());
-          final failure = (result as ResultFailure).failure;
+          final failure =
+              (result as ResultFailure<TypeEffectiveness, Failure>).failure;
           expect(failure, isA<ServerFailure>());
           expect(failure.message, equals(tErrorMessage));
         },
@@ -253,7 +259,8 @@ void main() {
 
           // assert
           expect(result, isA<ResultFailure<TypeEffectiveness, Failure>>());
-          final failure = (result as ResultFailure).failure;
+          final failure =
+              (result as ResultFailure<TypeEffectiveness, Failure>).failure;
           expect(failure, isA<ServerFailure>());
           expect(failure.message, contains(tErrorMessage));
         },
