@@ -124,6 +124,10 @@ class BattleBloc extends Bloc<BattleEvent, BattleState> {
       final playerGoesFirst =
           playerBattlePokemon.speed >= opponentBattlePokemon.speed;
 
+      final firstMover = playerGoesFirst
+          ? playerBattlePokemon.name
+          : opponentBattlePokemon.name;
+
       emit(
         state.copyWith(
           isLoading: false,
@@ -133,9 +137,7 @@ class BattleBloc extends Bloc<BattleEvent, BattleState> {
           isPlayerTurn: playerGoesFirst,
           battleLogs: [
             BattleLog(
-              message:
-                  'Battle started! ${playerGoesFirst ? playerBattlePokemon.name
-                      : opponentBattlePokemon.name} goes first!',
+              message: 'Battle started! $firstMover goes first!',
               timestamp: DateTime.now(),
             ),
           ],
